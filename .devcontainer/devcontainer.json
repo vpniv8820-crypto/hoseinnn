@@ -1,0 +1,14 @@
+{
+    "name": "Xray Gateway",
+    "image": "mcr.microsoft.com/devcontainers/base:jammy",
+    "features": {},
+    "postCreateCommand": "wget -q https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip && unzip -q Xray-linux-64.zip -d xray && rm Xray-linux-64.zip && cd xray && echo '{\"inbounds\":[{\"port\":8080,\"listen\":\"127.0.0.1\",\"protocol\":\"vless\",\"settings\":{\"clients\":[{\"id\":\"a4e43fc7-e69e-404c-bfa2-cd12ac9a7dcf\"}],\"decryption\":\"none\"},\"streamSettings\":{\"network\":\"ws\",\"wsSettings\":{\"path\":\"/ws\"}}}],\"outbounds\":[{\"protocol\":\"freedom\"}]}' > config.json && chmod +x xray && nohup ./xray run -c config.json > /dev/null 2>&1 &",
+    "forwardPorts": [8080],
+    "portsAttributes": {
+        "8080": {
+            "label": "Xray-Proxy",
+            "onAutoForward": "openBrowser",
+            "visibility": "public"
+        }
+    }
+}
